@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+
+# Dependencies
+node_modules/
+vendor/
+
+# Environment (berisi APP_KEY dan konfigurasi lokal)
+.env
+.env.*
+!.env.example
+
+# Laravel runtime / cache
+**/storage/logs/
+**/storage/framework/
+**/bootstrap/cache/
+**/public/build/
+**/public/hot
+**/public/storage
+
+# Database lokal
+**/database/*.sqlite
+**/database/*.sqlite-journal
+
+# IDE
+.idea/
+.vscode/
