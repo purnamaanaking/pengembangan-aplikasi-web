@@ -15,7 +15,6 @@ Route::get('/basic_routing', function() {
     return 'Hello World';
 });
 
-Route::view('/view_route', 'view_route');
 Route::view('/view_route', 'view_route', ['name' => 'Purnama']);
 
 Route::get('/controller_route', [RouteController::class, 'index']);
