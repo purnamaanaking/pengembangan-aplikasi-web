@@ -58,6 +58,8 @@ Tes bawaan Modul 09 **gagal** (status 302, bukan 200). Ini sesuai modul: `Route:
 | [`docs/CATATAN-UJI-MODUL-11.md`](docs/CATATAN-UJI-MODUL-11.md) | Hasil uji Modul 11, relevansi dengan Laravel 13, dan temuan |
 | [`docs/CATATAN-UJI-MODUL-12.md`](docs/CATATAN-UJI-MODUL-12.md) | Hasil uji Modul 12, relevansi dengan Laravel 13, dan temuan |
 
+File `.docx` Modul 11 dan 12 dibangun dengan skrip di [`tools/docx/`](tools/docx) (lihat README di folder itu).
+
 Kode di folder modul mengikuti modul cetaknya, termasuk bagian yang sengaja berurutan atau bertumpuk untuk keperluan latihan (misalnya urutan route di Modul 09). Karena itu, kode tidak dirapikan dengan formatter.
 
 ## Konvensi
