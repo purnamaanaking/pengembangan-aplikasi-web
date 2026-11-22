@@ -222,7 +222,7 @@ def fill(b):
     b.p('Buka `resources/views/employee/index.blade.php`. Ganti seluruh elemen `<table>` yang berisi data contoh dengan kode berikut. '
         'Kolom **Position** ditambahkan, dan baris tabel kini dibuat oleh `@foreach`.')
     b.code('HTML', between(read(M, 'resources/views/employee/index.blade.php'), '<table class=', '</table>'))
-    b.h2('6.3 Hasil yang diharapkan')
+    b.h2('6.3 Hasil yang diharapkan', page_break=True)
     b.p('Buka `/employees`. Tabel menampilkan tiga karyawan dari database lengkap dengan nama posisinya.')
     b.image(asset('m11-list.png'), 'Halaman /employees dengan data dari database.', 'Tabel Employee List dengan kolom Position berisi data dari database')
     b.h2('6.4 Pertanyaan')
@@ -281,7 +281,7 @@ def fill(b):
     # ------------------------------------------------------------------ 8
     b.h1('8. Menampilkan detail data')
     b.p('Tombol detail (ikon kartu) pada Employee List membuka `/employees/{id}`. Laravel meneruskan nilai id dari URL ke method `show()`.')
-    b.h2('8.1 Isi method show')
+    b.h2('8.1 Isi method show', page_break=True)
     b.code('PHP', method(M, CTRL, 'show'))
     b.p('Tanda `?` adalah parameter binding: nilai `$id` dikirim terpisah dari teks SQL, sehingga aman dari SQL injection. '
         '`DB::select()` selalu menghasilkan array, sehingga `collect(...)->first()` dipakai untuk mengambil satu baris saja.')

@@ -10,6 +10,7 @@ import struct
 import zipfile
 from xml.sax.saxutils import escape
 
+from gdocs_compat import PARTS, fix_xml
 from hl import highlight
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -79,11 +80,14 @@ class Builder:
         self.body.append('<w:p><w:pPr><w:pStyle w:val="Heading1"/>' + pb + '</w:pPr><w:bookmarkStart w:name="toc_%d" w:id="%d"/>'
                          '<w:r>%s</w:r><w:bookmarkEnd w:id="%d"/></w:p>' % (self.bm, self.bm, T(text), self.bm))
 
-    def h2(self, text):
+    def h2(self, text, page_break=False):
+        """page_break=True memaksa subbab mulai di halaman baru. Dipakai bila Word dan Google Docs
+        berbeda keputusan untuk heading di dasar halaman, agar nomor daftar isi sama di keduanya."""
         self.bm += 1
         num, title = text.split(' ', 1)
         self.toc.append((2, num, title, 'toc_%d' % self.bm))
-        self.body.append('<w:p><w:pPr><w:pStyle w:val="Heading2"/></w:pPr><w:bookmarkStart w:name="toc_%d" w:id="%d"/>'
+        pb = '<w:pageBreakBefore/>' if page_break else ''
+        self.body.append('<w:p><w:pPr><w:pStyle w:val="Heading2"/>' + pb + '</w:pPr><w:bookmarkStart w:name="toc_%d" w:id="%d"/>'
                          '<w:r>%s</w:r><w:bookmarkEnd w:id="%d"/></w:p>' % (self.bm, self.bm, T(text), self.bm))
 
     def h3(self, text):
@@ -341,6 +345,13 @@ def build(meta, fill, out_path, pages=None):
     c = re.sub(r'<dc:title>.*?</dc:title>', '<dc:title>%s</dc:title>' % escape(meta['doc_title']), c)
     c = re.sub(r'<dcterms:(created|modified) xsi:type="dcterms:W3CDTF">[^<]*', r'<dcterms:\1 xsi:type="dcterms:W3CDTF">2026-11-22T08:00:00.000Z', c)
     open(cp, 'w').write(c)
+
+    # kompatibel dengan Google Docs (tab sebagai <w:tab/>, nomor daftar isi tanpa field, tanpa jarak exact besar)
+    for part in PARTS:
+        pp = os.path.join(work, part)
+        if os.path.exists(pp):
+            fixed = fix_xml(open(pp).read())
+            open(pp, 'w').write(fixed)
 
     if os.path.exists(out_path):
         os.remove(out_path)

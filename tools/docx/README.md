@@ -2,7 +2,7 @@
 
 Skrip untuk membangun file modul praktikum (`docs/modul-praktikum/*.docx`) dengan desain yang sama seperti Modul 09 dan 10: sampul gelap, daftar isi bernomor, blok kode berwarna, kotak catatan, header dan footer bernomor halaman.
 
-Saat ini dipakai untuk Modul 11 dan 12. Modul 09 dan 10 dibuat dengan skrip lain yang tidak tersimpan, tetapi docx Modul 10 dipakai sebagai basis desain (styles, header, footer, theme, latar sampul).
+Saat ini dipakai untuk Modul 11 dan 12. Modul 09 dan 10 dibuat dengan skrip lain yang tidak tersimpan. Docx Modul 10 dipakai sebagai basis desain (styles, header, footer, theme, latar sampul), dan keduanya disesuaikan untuk Google Docs dengan `gdocs_compat.py` dan `retoc.py`.
 
 ## Isi folder
 
@@ -17,6 +17,8 @@ Saat ini dipakai untuk Modul 11 dan 12. Modul 09 dan 10 dibuat dengan skrip lain
 | `pages.py` | Membaca PDF hasil render dan mencatat halaman setiap heading untuk daftar isi |
 | `twopass.sh` | Build, render, isi nomor halaman daftar isi, ulangi sampai stabil |
 | `sheet.py` | Menggabungkan beberapa halaman PDF jadi satu gambar untuk pengecekan visual |
+| `gdocs_compat.py` | Menyesuaikan docx agar rapi di Google Docs. Dipanggil otomatis oleh `gen.py`; untuk docx lain jalankan `python3 gdocs_compat.py file.docx` |
+| `retoc.py` | Memperbarui nomor halaman daftar isi docx yang tidak dibangun `gen.py` (Modul 09 dan 10) dari render Word |
 | `templates/` | Potongan XML sampul, judul daftar isi, dan pengaturan halaman dari docx Modul 10 |
 | `assets/` | Screenshot aplikasi dan diagram. Sumber diagram ada di `assets/diagrams.html` |
 
@@ -64,6 +66,28 @@ Daftar isi harus muat satu halaman. Jika meluber ke halaman berikutnya, gabungka
 
 - Screenshot diambil dari aplikasi yang berjalan dengan viewport 1000 piksel dan skala 1,5 (hasil 1500 piksel lebar), supaya navbar Bootstrap tampil penuh.
 - Diagram ditulis di `assets/diagrams.html`. Render setiap elemen `#erd`, `#flow11`, `#rel12`, dan `#blade12` dengan skala 1,5, misalnya lewat Playwright.
+
+## Kompatibel dengan Google Docs
+
+Docx modul sering dibuka lewat Google Drive. `gdocs_compat.py` mengubah lima hal yang diabaikan atau ditampilkan berbeda oleh Google Docs, tanpa mengubah tampilan di Word:
+
+1. Tab ditulis sebagai `<w:tab/>`, bukan karakter tab di dalam teks (daftar isi, footer, dan baris bawah sampul).
+2. Nomor halaman daftar isi ditulis sebagai teks biasa, bukan field `PAGEREF`.
+3. Jarak baris judul dan spacer sampul memakai "auto", bukan "exact", agar sampul tetap satu halaman.
+4. Blok kode boleh terpotong di pergantian halaman, sama seperti di Google Docs. Dengan begitu jumlah halaman Word dan Google Docs sama, dan nomor daftar isi benar di keduanya.
+5. Chip tag di sampul diberi latar, karena Google Docs tidak menampilkan border per-teks.
+
+Jika Word dan Google Docs berbeda keputusan untuk heading di dasar halaman, paksa heading itu mulai di halaman baru: `b.h2('6.3 ...', page_break=True)` di `content_NN.py`, atau `retoc.py file.docx --break-before "5.12 Fallback route"` untuk Modul 09/10.
+
+Cara memeriksa: unggah docx ke Google Drive dengan konversi ke Google Docs, ekspor ke PDF, lalu bandingkan halaman setiap heading dengan nomor di daftar isi. Pemeriksaan terakhir (22 November 2026): keempat modul cocok 100%, dengan jumlah halaman Word dan Google Docs sama (Modul 09: 21, Modul 10: 23, Modul 11: 22, Modul 12: 25).
+
+Memperbarui Modul 09 atau 10:
+
+```sh
+cp ../../docs/modul-praktikum/Modul-10-*.docx out/m10.docx
+python3 gdocs_compat.py out/m10.docx
+PY=.venv/bin/python $PY retoc.py out/m10.docx
+```
 
 ## Catatan
 
