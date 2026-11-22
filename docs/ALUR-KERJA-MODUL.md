@@ -71,6 +71,9 @@ Aturan peletakan, mengikuti Modul 09 dan 10 di `Week 10`:
 3. Beri nama `WW - PAK - PAW - Modul NN Praktikum - <Judul>`, dengan `WW` nomor minggu. Contoh: `10 - PAK - PAW - Modul 09 Praktikum - Routing dan Bundling Asset di Laravel 13`.
 4. Pindahkan versi lama ke subfolder `_OLD` di folder minggu yang sama. Jangan menghapus file lama.
 5. Setelah diunggah, buka hasilnya di Google Docs atau ekspor ke PDF, lalu pastikan tampilannya sama dengan pemeriksaan di tahap 3.
+6. Modul di `Week 10` dibagikan sebagai "siapa saja yang memiliki link dapat melihat". File baru dibuat privat, jadi atur pembagiannya dengan cara yang sama sebelum link diberikan ke mahasiswa.
+
+File pengganti selalu mendapat link baru. Karena itu, sebelum mengganti modul yang sudah dibagikan, periksa dulu apakah file lama memang bermasalah (ekspor ke PDF, cek sampul, daftar isi, dan nomor halaman). Jika isinya sudah benar, biarkan file lama, supaya link yang sudah dipegang mahasiswa tetap berlaku. Contoh: Modul 09 dan 10 di `Week 10` sudah diperbaiki langsung di Google Docs, sehingga tidak diganti.
 
 ## Daftar periksa satu modul
 
