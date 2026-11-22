@@ -70,4 +70,5 @@ Tidak diuji: pembuatan laporan dan upload ke GitHub.
 - Bab 7: `edit.blade.php` dibuat dari salinan `create.blade.php`, bukan "dibuka"; form edit memakai `border` (temuan 1 dan 6).
 - Bab 8: catatan import `DB` yang tidak terpakai (temuan 9).
 - Bab 9–10: diagram layout Blade, catatan `request()->routeIs('employees.*')`, ikon Profile, dan seluruh view final ditulis lengkap (tanpa "Dan seterusnya") (temuan 4 dan 5).
+- Route `/` diarahkan ke `/employees` dengan `Route::redirect('/', '/employees')` (permintaan pengguna, di luar modul asli), karena halaman welcome warisan Modul 10 tidak relevan lagi. Langkahnya ditulis di Bab 2 Modul 11; `ExampleTest` kedua project disesuaikan untuk memeriksa redirect tersebut.
 - Kode di modul diambil langsung dari folder `modul-12-database-lanjut/` yang sudah diuji; screenshot diambil dari aplikasi yang berjalan.
