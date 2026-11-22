@@ -82,17 +82,20 @@ def fill(b):
     # ------------------------------------------------------------------ 2
     b.h1('2. Persiapan project')
     b.p('Bab ini menyiapkan salinan project Modul 10 sebagai titik awal, sehingga project Modul 10 yang sudah di-upload tetap utuh.')
-    b.h2('2.1 Salin project Modul 10')
+    b.h2('2.1 Salin project dan arahkan halaman utama')
     b.p('Salin folder project Modul 10 menjadi folder baru bernama `modul11`, lalu hapus folder `.git` di dalam salinan. '
         'Penyalinan boleh dilakukan lewat File Explorer atau Finder. Di macOS dan Linux, perintahnya sebagai berikut.')
     b.code('BASH', 'cp -R modul10 modul11\ncd modul11\nrm -rf .git')
     b.note('catatan', 'Folder `.git` dihapus agar salinan ini nanti di-upload ke repository GitHub baru, bukan ke repository Modul 10. '
            'Jika folder `vendor` atau `node_modules` tidak ikut tersalin, jalankan `composer install` dan `npm install` di folder `modul11`.')
+    b.p('Mulai modul ini, halaman utama langsung diarahkan ke Employee List. Buka `routes/web.php`, lalu ganti route `/` '
+        'bawaan (yang menampilkan view welcome) dengan baris berikut. `Route::redirect()` sudah dipelajari pada Modul 09.')
+    b.code('PHP', "Route::redirect('/', '/employees');")
     b.h2('2.2 Jalankan aplikasi')
     b.p('Buka dua terminal di folder project, lalu jalankan satu perintah di tiap terminal. Biarkan keduanya tetap berjalan sampai praktikum selesai.')
     b.code('BASH', '# Terminal 1: Vite\nnpm run dev')
     b.code('BASH', '# Terminal 2: server Laravel\nphp artisan serve')
-    b.p('Buka `http://localhost:8000/employees`. Halaman masih menampilkan tiga karyawan yang ditulis langsung di view, sama seperti akhir Modul 10.')
+    b.p('Buka `http://localhost:8000`. Browser langsung diarahkan ke `/employees`, dan halaman masih menampilkan tiga karyawan yang ditulis langsung di view, sama seperti akhir Modul 10.')
 
     # ------------------------------------------------------------------ 3
     b.h1('3. Database dan konfigurasi')
@@ -219,7 +222,7 @@ def fill(b):
     b.p('Buka `resources/views/employee/index.blade.php`. Ganti seluruh elemen `<table>` yang berisi data contoh dengan kode berikut. '
         'Kolom **Position** ditambahkan, dan baris tabel kini dibuat oleh `@foreach`.')
     b.code('HTML', between(read(M, 'resources/views/employee/index.blade.php'), '<table class=', '</table>'))
-    b.h2('6.3 Hasil yang diharapkan')
+    b.h2('6.3 Hasil yang diharapkan', page_break=True)
     b.p('Buka `/employees`. Tabel menampilkan tiga karyawan dari database lengkap dengan nama posisinya.')
     b.image(asset('m11-list.png'), 'Halaman /employees dengan data dari database.', 'Tabel Employee List dengan kolom Position berisi data dari database')
     b.h2('6.4 Pertanyaan')
@@ -278,7 +281,7 @@ def fill(b):
     # ------------------------------------------------------------------ 8
     b.h1('8. Menampilkan detail data')
     b.p('Tombol detail (ikon kartu) pada Employee List membuka `/employees/{id}`. Laravel meneruskan nilai id dari URL ke method `show()`.')
-    b.h2('8.1 Isi method show')
+    b.h2('8.1 Isi method show', page_break=True)
     b.code('PHP', method(M, CTRL, 'show'))
     b.p('Tanda `?` adalah parameter binding: nilai `$id` dikirim terpisah dari teks SQL, sehingga aman dari SQL injection. '
         '`DB::select()` selalu menghasilkan array, sehingga `collect(...)->first()` dipakai untuk mengambil satu baris saja.')

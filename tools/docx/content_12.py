@@ -74,7 +74,7 @@ def fill(b):
     b.h2('2.2 Siapkan database dan jalankan aplikasi')
     b.p('Pastikan MySQL berjalan di XAMPP Control Panel. Kembalikan isi database ke data awal agar hasil praktikum sama dengan modul.')
     b.code('BASH', 'php artisan migrate:fresh --seed')
-    b.p('Jalankan aplikasi di dua terminal, lalu buka `http://localhost:8000/employees`. Tabel menampilkan tiga karyawan seperti akhir Modul 11.')
+    b.p('Jalankan aplikasi di dua terminal, lalu buka `http://localhost:8000`. Halaman utama langsung diarahkan ke `/employees` (diatur pada Modul 11), dan tabel menampilkan tiga karyawan seperti akhir Modul 11.')
     b.code('BASH', '# Terminal 1: Vite\nnpm run dev')
     b.code('BASH', '# Terminal 2: server Laravel\nphp artisan serve')
 

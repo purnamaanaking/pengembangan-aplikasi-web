@@ -43,9 +43,11 @@ php artisan test                                                   # semua tes
 php artisan test --filter=test_the_application_returns_a_successful_response   # satu tes
 ```
 
-Tes bawaan Modul 09 **gagal** (status 302, bukan 200). Ini sesuai modul: `Route::redirect('/', '/routing')` menimpa route `/` bawaan. Tes Modul 10, 11, dan 12 lulus.
+Tes bawaan Modul 09 **gagal** (status 302, bukan 200). Ini sesuai modul: `Route::redirect('/', '/routing')` menimpa route `/` bawaan. Tes Modul 10, 11, dan 12 lulus. Pada Modul 11 dan 12, route `/` diarahkan ke `/employees`, dan tesnya memeriksa redirect tersebut.
 
 ## Dokumentasi
+
+Alur kerja penyusunan modul (uji, simulasi ke project, penyusunan docx, pull request, dan peletakan di Google Drive) dicatat di [`docs/ALUR-KERJA-MODUL.md`](docs/ALUR-KERJA-MODUL.md).
 
 | Berkas | Isi |
 | --- | --- |

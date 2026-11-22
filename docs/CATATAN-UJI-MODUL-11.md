@@ -88,4 +88,5 @@ Tidak diuji: XAMPP/phpMyAdmin (lingkungan uji macOS), pembuatan laporan, upload 
 - Bab 5: `DatabaseSeeder` diganti seluruhnya, peringatan `db:seed` dua kali dan `migrate:fresh --seed`, penjelasan timestamp `NULL` (temuan 5 dan 9).
 - Bab 6–9: penjelasan alias `employee_id`, parameter binding `?`, tabel uji form termasuk email duplikat, catatan id tidak ditemukan, label `for="position"` (temuan 7 dan 10).
 - Bab 11 (Tugas): fitur Edit dijelaskan eksplisit dan disebut akan dipakai Modul 12; petunjuk padanan raw SQL ke query builder untuk tugas konversi (temuan 8).
+- Route `/` diarahkan ke `/employees` dengan `Route::redirect('/', '/employees')` (permintaan pengguna, di luar modul asli), karena halaman welcome warisan Modul 10 tidak relevan lagi. Langkahnya ditulis di Bab 2 Modul 11; `ExampleTest` kedua project disesuaikan untuk memeriksa redirect tersebut.
 - Kode di modul diambil langsung dari folder `modul-11-database-dasar/` yang sudah diuji; screenshot diambil dari aplikasi yang berjalan.
