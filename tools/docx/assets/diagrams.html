@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+  body { margin: 0; background: #fff; font-family: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif; color: #1f1f1f; }
+  .d { position: relative; width: 896px; background: #fff; overflow: hidden; }
+  .t { position: absolute; left: 28px; top: 22px; font-size: 17px; font-weight: 700; }
+  .b { position: absolute; box-sizing: border-box; border: 1.5px solid #c9c6bf; border-radius: 9px; background: #fff;
+       display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6px 10px; }
+  .b.hi { border-color: #2f7bd8; background: #e6eef9; }
+  .b.soft { background: #f7f6f3; }
+  .b h { font-weight: 700; font-size: 14px; display: block; }
+  .b s { text-decoration: none; font-size: 12px; color: #55524d; margin-top: 3px; display: block; font-family: "SF Mono", Menlo, Consolas, monospace; }
+  .lbl { position: absolute; font-size: 12px; color: #55524d; }
+  .tbl { position: absolute; box-sizing: border-box; border: 1.5px solid #c9c6bf; border-radius: 9px; overflow: hidden; background: #fff; font-size: 13px; }
+  .tbl .hd { background: #2b2b2b; color: #fff; font-weight: 700; padding: 8px 12px; font-size: 14px; }
+  .tbl .r { display: flex; justify-content: space-between; padding: 5px 12px; border-top: 1px solid #eceae6; font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 12px; }
+  .tbl .r i { font-style: normal; color: #85532f; font-family: -apple-system, Arial, sans-serif; font-size: 11px; font-weight: 700; }
+  .tbl .r.k { background: #f6f5f3; }
+  svg { position: absolute; left: 0; top: 0; }
+  .code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 12px; }
+</style></head><body>
+
+<!-- 1. ERD Modul 11 -->
+<div class="d" id="erd" style="height:330px">
+  <div class="t">Satu posisi dimiliki banyak karyawan (one-to-many)</div>
+  <div class="tbl" style="left:60px; top:70px; width:300px">
+    <div class="hd">employees</div>
+    <div class="r k"><span>id</span><i>PK</i></div>
+    <div class="r"><span>firstname</span><span>string</span></div>
+    <div class="r"><span>lastname</span><span>string, nullable</span></div>
+    <div class="r"><span>email</span><span>string, unique</span></div>
+    <div class="r"><span>age</span><span>integer</span></div>
+    <div class="r k"><span>position_id</span><i>FK → positions.id</i></div>
+    <div class="r"><span>created_at, updated_at</span><span>timestamp</span></div>
+  </div>
+  <div class="tbl" style="left:540px; top:100px; width:290px">
+    <div class="hd">positions</div>
+    <div class="r k"><span>id</span><i>PK</i></div>
+    <div class="r"><span>code</span><span>string</span></div>
+    <div class="r"><span>name</span><span>string</span></div>
+    <div class="r"><span>description</span><span>string</span></div>
+    <div class="r"><span>created_at, updated_at</span><span>timestamp</span></div>
+  </div>
+  <svg width="896" height="330">
+    <defs><marker id="a1" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f7bd8"/></marker></defs>
+    <path d="M360 243 L450 243 L450 143 L538 143" fill="none" stroke="#2f7bd8" stroke-width="2" marker-end="url(#a1)"/>
+  </svg>
+  <div class="lbl" style="left:372px; top:220px">banyak</div>
+  <div class="lbl" style="left:500px; top:120px">satu</div>
+  <div class="lbl" style="left:60px; top:296px; width:780px">Kolom position_id pada employees merujuk kolom id pada positions. Migration positions harus dijalankan lebih dulu.</div>
+</div>
+
+<!-- 2. Alur data Modul 11 -->
+<div class="d" id="flow11" style="height:300px">
+  <div class="t">Data karyawan mengalir dari MySQL ke tabel di browser</div>
+  <div class="b" style="left:28px; top:90px; width:150px; height:78px"><h>Browser</h><s>GET /employees</s></div>
+  <div class="b" style="left:218px; top:90px; width:170px; height:78px"><h>Route</h><s>employees.index</s></div>
+  <div class="b hi" style="left:428px; top:90px; width:200px; height:78px"><h>EmployeeController</h><s>index(): DB::select()</s></div>
+  <div class="b soft" style="left:428px; top:206px; width:200px; height:70px"><h>MySQL data_master</h><s>employees JOIN positions</s></div>
+  <div class="b" style="left:668px; top:90px; width:200px; height:78px"><h>View</h><s>employee.index</s></div>
+  <svg width="896" height="300">
+    <defs><marker id="a2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b5b2ab"/></marker></defs>
+    <path d="M178 129 L214 129" stroke="#b5b2ab" stroke-width="2" marker-end="url(#a2)"/>
+    <path d="M388 129 L424 129" stroke="#b5b2ab" stroke-width="2" marker-end="url(#a2)"/>
+    <path d="M628 129 L664 129" stroke="#b5b2ab" stroke-width="2" marker-end="url(#a2)"/>
+    <path d="M510 168 L510 202" stroke="#b5b2ab" stroke-width="2" marker-end="url(#a2)"/>
+    <path d="M546 206 L546 172" stroke="#b5b2ab" stroke-width="2" marker-end="url(#a2)"/>
+  </svg>
+  <div class="lbl" style="left:460px; top:178px">query</div>
+  <div class="lbl" style="left:556px; top:178px">hasil</div>
+  <div class="lbl" style="left:668px; top:180px; width:200px">$employees dikirim ke view lalu diulang dengan @foreach</div>
+</div>
+
+<!-- 3. Relasi Eloquent Modul 12 -->
+<div class="d" id="rel12" style="height:300px">
+  <div class="t">Relasi Eloquent: dua method, satu foreign key</div>
+  <div class="b hi" style="left:60px; top:90px; width:280px; height:96px"><h>Position</h><s>employees(): hasMany(Employee)</s><s>$position-&gt;employees</s></div>
+  <div class="b hi" style="left:556px; top:90px; width:280px; height:96px"><h>Employee</h><s>position(): belongsTo(Position)</s><s>$employee-&gt;position-&gt;name</s></div>
+  <div class="b soft" style="left:556px; top:214px; width:280px; height:60px"><h>tabel employees</h><s>position_id → positions.id</s></div>
+  <svg width="896" height="300">
+    <defs><marker id="a3" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f7bd8"/></marker></defs>
+    <path d="M340 122 L552 122" stroke="#2f7bd8" stroke-width="2" marker-end="url(#a3)"/>
+    <path d="M556 156 L344 156" stroke="#2f7bd8" stroke-width="2" marker-end="url(#a3)"/>
+    <path d="M696 186 L696 210" stroke="#2f7bd8" stroke-width="2" marker-end="url(#a3)"/>
+  </svg>
+  <div class="lbl" style="left:388px; top:100px">hasMany: satu ke banyak</div>
+  <div class="lbl" style="left:388px; top:162px">belongsTo: banyak ke satu</div>
+</div>
+
+<!-- 4. Blade layout Modul 12 -->
+<div class="d" id="blade12" style="height:400px">
+  <div class="t">Satu layout dipakai semua halaman</div>
+  <div class="b" style="left:28px; top:70px; width:390px; height:300px; justify-content:flex-start; align-items:stretch; text-align:left; padding:14px 16px">
+    <h>layouts/app.blade.php</h>
+    <div class="code" style="margin-top:12px; color:#55524d">&lt;head&gt; ... @vite('resources/sass/app.scss')</div>
+    <div class="b soft" style="position:static; margin-top:12px; height:52px"><h>@include('layouts.nav')</h><s>navbar + link aktif</s></div>
+    <div class="b hi" style="position:static; margin-top:12px; height:92px"><h>@yield('content')</h><s>diisi oleh halaman</s></div>
+    <div class="code" style="margin-top:12px; color:#55524d">@vite('resources/js/app.js')</div>
+  </div>
+  <div class="b" style="left:500px; top:96px; width:368px; height:84px"><h>employee/index.blade.php</h><s>@extends('layouts.app')</s><s>@section('content') ... @endsection</s></div>
+  <div class="b soft" style="left:560px; top:206px; width:308px; height:58px"><h>employee/actions.blade.php</h><s>@include per baris tabel</s></div>
+  <div class="b" style="left:500px; top:292px; width:368px; height:78px"><h>home.blade.php, profile.blade.php</h><s>@section('content') @include('default')</s></div>
+  <svg width="896" height="400">
+    <defs><marker id="a4" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f7bd8"/></marker></defs>
+    <path d="M500 138 L422 225" stroke="#2f7bd8" stroke-width="2" marker-end="url(#a4)"/>
+    <path d="M500 330 L422 250" stroke="#2f7bd8" stroke-width="2" marker-end="url(#a4)"/>
+    <path d="M684 180 L684 202" stroke="#b5b2ab" stroke-width="2" marker-end="url(#a4)"/>
+  </svg>
+</div>
+</body></html>
