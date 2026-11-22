@@ -18,6 +18,7 @@ Saat ini dipakai untuk Modul 11 dan 12. Modul 09 dan 10 dibuat dengan skrip lain
 | `twopass.sh` | Build, render, isi nomor halaman daftar isi, ulangi sampai stabil |
 | `sheet.py` | Menggabungkan beberapa halaman PDF jadi satu gambar untuk pengecekan visual |
 | `gdocs_compat.py` | Menyesuaikan docx agar rapi di Google Docs. Dipanggil otomatis oleh `gen.py`; untuk docx lain jalankan `python3 gdocs_compat.py file.docx` |
+| `calibri_widths.json` | Lebar karakter Calibri untuk menghitung jumlah titik daftar isi |
 | `retoc.py` | Memperbarui nomor halaman daftar isi docx yang tidak dibangun `gen.py` (Modul 09 dan 10) dari render Word |
 | `templates/` | Potongan XML sampul, judul daftar isi, dan pengaturan halaman dari docx Modul 10 |
 | `assets/` | Screenshot aplikasi dan diagram. Sumber diagram ada di `assets/diagrams.html` |
@@ -69,17 +70,18 @@ Daftar isi harus muat satu halaman. Jika meluber ke halaman berikutnya, gabungka
 
 ## Kompatibel dengan Google Docs
 
-Docx modul sering dibuka lewat Google Drive. `gdocs_compat.py` mengubah lima hal yang diabaikan atau ditampilkan berbeda oleh Google Docs, tanpa mengubah tampilan di Word:
+Docx modul sering dibuka lewat Google Drive. `gdocs_compat.py` mengubah enam hal yang diabaikan atau ditampilkan berbeda oleh Google Docs, tanpa mengubah tampilan di Word:
 
 1. Tab ditulis sebagai `<w:tab/>`, bukan karakter tab di dalam teks (daftar isi, footer, dan baris bawah sampul).
 2. Nomor halaman daftar isi ditulis sebagai teks biasa, bukan field `PAGEREF`.
 3. Jarak baris judul dan spacer sampul memakai "auto", bukan "exact", agar sampul tetap satu halaman.
 4. Blok kode boleh terpotong di pergantian halaman, sama seperti di Google Docs. Dengan begitu jumlah halaman Word dan Google Docs sama, dan nomor daftar isi benar di keduanya.
 5. Chip tag di sampul diberi latar, karena Google Docs tidak menampilkan border per-teks.
+6. Titik-titik daftar isi ditulis sebagai karakter `.`, bukan tab leader, yang tidak didukung Google Docs. Jumlahnya dihitung dari lebar karakter Calibri (`calibri_widths.json`), font yang dipakai Word maupun Google Docs.
 
 Jika Word dan Google Docs berbeda keputusan untuk heading di dasar halaman, paksa heading itu mulai di halaman baru: `b.h2('6.3 ...', page_break=True)` di `content_NN.py`, atau `retoc.py file.docx --break-before "5.12 Fallback route"` untuk Modul 09/10.
 
-Cara memeriksa: unggah docx ke Google Drive dengan konversi ke Google Docs, ekspor ke PDF, lalu bandingkan halaman setiap heading dengan nomor di daftar isi. Pemeriksaan terakhir (22 November 2026): keempat modul cocok 100%, dengan jumlah halaman Word dan Google Docs sama (Modul 09: 21, Modul 10: 23, Modul 11: 22, Modul 12: 25).
+Cara memeriksa: unggah docx ke Google Drive dengan konversi ke Google Docs, ekspor ke PDF, lalu bandingkan halaman setiap heading dengan nomor di daftar isi. Pemeriksaan terakhir (22 November 2026): titik-titik daftar isi tampil di semua entri tanpa meluber ke baris baru, dan nomor halaman keempat modul cocok 100%, dengan jumlah halaman Word dan Google Docs sama (Modul 09: 21, Modul 10: 23, Modul 11: 22, Modul 12: 25).
 
 Memperbarui Modul 09 atau 10:
 

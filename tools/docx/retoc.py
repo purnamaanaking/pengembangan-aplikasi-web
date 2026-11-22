@@ -17,6 +17,8 @@ import zipfile
 
 import pymupdf
 
+from gdocs_compat import fill_toc_dots
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -56,6 +58,7 @@ def write_pages(path, pages):
                 para, bm = m.group(0), m.group(1)
                 return re.sub(r'(<w:t[^>]*>)\d+(</w:t>)(?!.*<w:t)', r'\g<1>%d\2' % pages[bm], para, flags=re.S)
             s = re.sub(r'<w:p>(?:(?!</w:p>).)*?w:anchor="(toc_\d+)"(?:(?!</w:p>).)*</w:p>', fix, s, flags=re.S)
+            s = fill_toc_dots(s)  # jumlah titik bergantung pada lebar nomor halaman
             data = s.encode('utf-8')
         out.append((n, data))
     tmp = path + '.tmp'

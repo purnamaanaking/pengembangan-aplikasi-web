@@ -14,12 +14,17 @@ tanpa mengubah tampilan di Word:
    Dengan aturan yang sama, jumlah halaman di Word dan Google Docs sama, sehingga nomor daftar isi benar di keduanya.
 5. Chip tag di sampul diberi latar gelap. Google Docs tidak menampilkan border per-teks, jadi tanpa latar
    chip hanya tampil sebagai teks berwarna.
+6. Titik-titik daftar isi ditulis sebagai karakter "." biasa, bukan tab leader. Google Docs tidak mendukung
+   tab leader. Jumlah titik dihitung dari lebar karakter Calibri (calibri_widths.json), font yang dipakai
+   Word maupun Google Docs, lalu nomor halaman diratakan kanan dengan tab biasa.
 
 Pemakaian:
     python3 gdocs_compat.py file.docx [file2.docx ...]   # mengubah file di tempat
 Dari kode:
     from gdocs_compat import fix_xml
 """
+import html
+import json
 import os
 import re
 import shutil
@@ -61,6 +66,44 @@ def _loosen_code(m):
     return t
 
 
+_W = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'calibri_widths.json'), encoding='utf-8'))
+_RIGHT = 9638  # posisi tab kanan daftar isi (twip)
+_TOC_P = re.compile(r'<w:p>(?:(?!</w:p>).)*?w:anchor="toc_\d+"(?:(?!</w:p>).)*</w:p>', re.S)
+
+
+def _twips(text, size_half_pt, bold):
+    table = _W['bold' if bold else 'regular']
+    units = sum(table.get(ch, 500.0) for ch in text)
+    return units / 1000.0 * (size_half_pt / 2.0) * 20.0
+
+
+def _fill_dots(m):
+    p = m.group(0).replace(' w:leader="dot"', '')
+    tabs = [int(x) for x in re.findall(r'<w:tab w:val="left" w:pos="(\d+)"/>', p)]
+    title = re.search(r'<w:hyperlink[^>]*><w:r><w:rPr>((?:(?!</w:rPr>).)*)</w:rPr><w:t[^>]*>([^<]*)</w:t>', p, re.S)
+    dots = re.search(r'(<w:r><w:rPr>(?:(?!</w:rPr>).)*?<w:color w:val="BEBAB4"/>(?:(?!</w:rPr>).)*?<w:sz w:val="(\d+)"/>'
+                     r'(?:(?!</w:rPr>).)*?</w:rPr>)(?:<w:t[^>]*>[ .]*</w:t>)?<w:tab/></w:r>', p, re.S)
+    page = re.findall(r'<w:r><w:rPr>((?:(?!</w:rPr>).)*)</w:rPr><w:t[^>]*>(\d+)</w:t></w:r>', p, re.S)
+    if not (tabs and title and dots and page):
+        return p
+    size = int(dots.group(2))
+    title_bold = '<w:b/>' in title.group(1)
+    page_rpr, page_text = page[-1]
+    page_size = int(re.search(r'<w:sz w:val="(\d+)"/>', page_rpr).group(1))
+    start = tabs[0] + _twips(html.unescape(title.group(2)), size, title_bold)
+    end = _RIGHT - _twips(page_text, page_size, '<w:b/>' in page_rpr)
+    dot = _twips('.', size, False)
+    space = _twips(' ', size, False)
+    n = int((end - start - 2 * space) / dot) - 1
+    fill = ' ' + '.' * max(n, 0) if n > 2 else ''
+    new_run = dots.group(1) + ('<w:t xml:space="preserve">%s</w:t>' % fill if fill else '') + '<w:tab/></w:r>'
+    return p[:dots.start()] + new_run + p[dots.end():]
+
+
+def fill_toc_dots(s):
+    return _TOC_P.sub(_fill_dots, s)
+
+
 def fix_xml(s):
     s = _T.sub(_split_tabs, s)
     s = _TBL.sub(_loosen_code, s)
@@ -68,6 +111,7 @@ def fix_xml(s):
     s = _PAGEREF.sub(r'\1', s)
     s = s.replace('w:line="980" w:lineRule="exact"', 'w:line="240" w:lineRule="auto"')
     s = s.replace('w:before="0" w:line="900" w:lineRule="exact"', 'w:before="860" w:line="240" w:lineRule="auto"')
+    s = fill_toc_dots(s)
     return s
 
 
@@ -78,6 +122,7 @@ def report(s):
         'exact-besar': len(re.findall(r'w:line="(?:9[0-9]{2}|[6-8][0-9]{2})" w:lineRule="exact"', s)),
         'kode-ditahan': sum(1 for t in _TBL.findall(s) if '&lt;/&gt; ' in t[:4000] and ('<w:cantSplit/>' in t or '<w:keepNext/>' in t)),
         'chip-tanpa-latar': len(_CHIP.findall(s)),
+        'tab-leader': s.count('w:leader="dot"'),
     }
 
 
