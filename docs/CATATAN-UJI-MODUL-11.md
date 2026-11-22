@@ -76,3 +76,17 @@ Tidak diuji: XAMPP/phpMyAdmin (lingkungan uji macOS), pembuatan laporan, upload 
 
 - `.env.example` diubah ke konfigurasi MySQL sesuai modul (`DB_CONNECTION=mysql`, `DB_DATABASE=data_master`, port 3306). Buat database `data_master` lebih dulu, lalu jalankan `php artisan migrate --seed`.
 - Selain itu, semua kode disalin apa adanya dari modul.
+
+## Status perbaikan modul
+
+Temuan di atas sudah diterapkan ke `modul-praktikum/Modul-11-Laravel-Database-Tahap-Dasar.docx` (desain asli dipertahankan; tambahan ditulis sebagai kotak "Catatan"):
+
+- Sampul dan judul isi menjadi **MODUL 11**, tahun 2026; nomor halaman daftar isi diperbarui.
+- Bab 1: catatan bahwa XAMPP hanya dipakai untuk MySQL dan phpMyAdmin, sedangkan PHP 8.3+ berasal dari instalasi lain (temuan 2). Screenshot XAMPP tetap dipakai, dengan keterangan bahwa tampilan versi terbaru bisa berbeda.
+- Bab 2: screenshot `.env` Laravel 10 diganti dua blok kode (bawaan Laravel 13 dan hasil akhir dengan `DB_CONNECTION=mysql`), ditambah catatan error SQLite dan error tabel `sessions` sebelum migrate (temuan 1 dan 3).
+- Bab 3: diagram dipotong menjadi hanya `employees` dan `positions`, ditambah daftar tabel bawaan Laravel 13 (temuan 4).
+- Bab 4: catatan urutan migration (temuan 6). Bab 5: typo "Definisikan", catatan `migrate:fresh --seed`, dan timestamp `NULL` (temuan 5 dan 9).
+- Bab 7: catatan email duplikat dan `unique:employees,email`. Bab 8: label Position memakai `for="position"`, ditambah catatan id yang tidak ditemukan (temuan 7 dan 10).
+- Tugas 2: menyebut `edit()`, `update()`, dan `edit.blade.php` secara eksplisit, serta bahwa file ini dipakai lagi di Modul 12 (temuan 8).
+
+Kode di folder modul ikut disesuaikan: `employee/show.blade.php` memakai `for="position"`.

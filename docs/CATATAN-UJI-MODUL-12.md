@@ -59,3 +59,16 @@ Tidak diuji: pembuatan laporan dan upload ke GitHub.
 9. **Sisa import.** Setelah semua query diganti Eloquent, `use Illuminate\Support\Facades\DB;` di `EmployeeController` tidak terpakai lagi. Modul tidak memintanya dihapus, jadi dibiarkan.
 
 10. **Penomoran dan teks.** Judul di Google Docs adalah "11 - ... (Modul 14 Praktikum)" dan sampul tertulis **MODUL 14**, tahun 2024. Typo: "Tambahkankan", "dimiiki", "inherintance", "memanggilkan". `{{-- Dan Seterusnya --}}` di Bab 12 dan 14 berarti isi form dari Bab 3 dan 5 tetap dipakai; ini cukup jelas, tetapi container berubah dari `mt-5` (Modul 10) menjadi `my-5`.
+
+## Status perbaikan modul
+
+Temuan di atas sudah diterapkan ke `modul-praktikum/Modul-12-Laravel-Database-Tahap-Lanjut.docx` (desain asli dipertahankan; tambahan ditulis sebagai kotak "Catatan"):
+
+- Sampul dan judul isi menjadi **MODUL 12**, tahun 2026; nomor halaman daftar isi diperbarui. Typo "dimiliki", "Tambahkan", "inheritance", "memanggil" diperbaiki (temuan 10).
+- Bab 1: teks "function employees()" dan catatan stub `make:model` Laravel 13 tanpa `HasFactory` (temuan 2 dan 3).
+- Bab 2: catatan N+1 query dan eager loading `with('position')` (temuan 7). Bab 3: catatan timestamp otomatis pada Eloquent.
+- Bab 4: catatan `findOrFail()`; label Position di Bab 4 dan 13 memakai `for="position"` (temuan 8).
+- Bab 5: "Buat file View .../edit.blade.php" beserta petunjuk kerangkanya, dan form edit memakai class `border` seperti form create (temuan 1 dan 6).
+- Bab 6: catatan import `DB` yang tidak terpakai (temuan 9). Bab 7: catatan `request()->routeIs('employees.*')` (temuan 4). Bab 15: catatan ikon Profile (temuan 5).
+
+Kode di folder modul ikut disesuaikan: `employee/show.blade.php` memakai `for="position"` dan `employee/edit.blade.php` memakai `border`.

@@ -62,7 +62,7 @@ Kode di folder modul mengikuti modul cetaknya, termasuk bagian yang sengaja beru
 
 ## Konvensi
 
-- Folder modul: `modul-NN-slug/`, dikerjakan di branch `praktikum/modul-NN-slug`, lalu digabung ke `main` dengan merge commit.
+- Folder modul: `modul-NN-slug/`, dikerjakan di branch `praktikum/modul-NN-slug`, lalu digabung ke `main` lewat pull request di GitHub. Perubahan lain juga dikerjakan di branch baru dan masuk lewat pull request.
 - Pesan commit praktikum berbentuk `Praktikum Modul NN: <judul modul>`.
 - `.env`, `vendor/`, `node_modules/`, dan `public/build/` tidak ikut di-commit.
 - `CLAUDE.md` dan `AGENTS.md` di dalam folder modul adalah berkas bawaan `composer create-project` Laravel 13 (petunjuk memasang Laravel Boost), bukan bagian dari praktikum. Panduan untuk Claude Code ada di [`CLAUDE.md`](CLAUDE.md) di root.
