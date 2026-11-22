@@ -47,6 +47,8 @@ Tes bawaan Modul 09 **gagal** (status 302, bukan 200). Ini sesuai modul: `Route:
 
 ## Dokumentasi
 
+Alur kerja penyusunan modul (uji, simulasi ke project, penyusunan docx, pull request, dan peletakan di Google Drive) dicatat di [`docs/ALUR-KERJA-MODUL.md`](docs/ALUR-KERJA-MODUL.md).
+
 | Berkas | Isi |
 | --- | --- |
 | [`docs/modul-praktikum/Modul-09-Routing-dan-Bundling-Asset-di-Laravel.docx`](docs/modul-praktikum/Modul-09-Routing-dan-Bundling-Asset-di-Laravel.docx) | Modul praktikum 09 |
