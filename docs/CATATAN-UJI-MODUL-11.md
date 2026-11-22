@@ -79,14 +79,13 @@ Tidak diuji: XAMPP/phpMyAdmin (lingkungan uji macOS), pembuatan laporan, upload 
 
 ## Status perbaikan modul
 
-Temuan di atas sudah diterapkan ke `modul-praktikum/Modul-11-Laravel-Database-Tahap-Dasar.docx` (desain asli dipertahankan; tambahan ditulis sebagai kotak "Catatan"):
+`modul-praktikum/Modul-11-Laravel-Database-Tahap-Dasar.docx` ditulis ulang dengan desain dan struktur Modul 09/10 (sampul gelap, daftar isi bernomor, subbab Tujuan/Hasil akhir/Prasyarat, blok kode berwarna, kotak Catatan/Perhatian, Hasil yang diharapkan, Pertanyaan per bab, Pemecahan masalah, Tugas dan daftar periksa). Isi teknisnya tetap mengikuti modul asli, dan semua temuan di atas sudah diterapkan:
 
-- Sampul dan judul isi menjadi **MODUL 11**, tahun 2026; nomor halaman daftar isi diperbarui.
-- Bab 1: catatan bahwa XAMPP hanya dipakai untuk MySQL dan phpMyAdmin, sedangkan PHP 8.3+ berasal dari instalasi lain (temuan 2). Screenshot XAMPP tetap dipakai, dengan keterangan bahwa tampilan versi terbaru bisa berbeda.
-- Bab 2: screenshot `.env` Laravel 10 diganti dua blok kode (bawaan Laravel 13 dan hasil akhir dengan `DB_CONNECTION=mysql`), ditambah catatan error SQLite dan error tabel `sessions` sebelum migrate (temuan 1 dan 3).
-- Bab 3: diagram dipotong menjadi hanya `employees` dan `positions`, ditambah daftar tabel bawaan Laravel 13 (temuan 4).
-- Bab 4: catatan urutan migration (temuan 6). Bab 5: typo "Definisikan", catatan `migrate:fresh --seed`, dan timestamp `NULL` (temuan 5 dan 9).
-- Bab 7: catatan email duplikat dan `unique:employees,email`. Bab 8: label Position memakai `for="position"`, ditambah catatan id yang tidak ditemukan (temuan 7 dan 10).
-- Tugas 2: menyebut `edit()`, `update()`, dan `edit.blade.php` secara eksplisit, serta bahwa file ini dipakai lagi di Modul 12 (temuan 8).
-
-Kode di folder modul ikut disesuaikan: `employee/show.blade.php` memakai `for="position"`.
+- Nomor modul menjadi **11**, Laravel 13, diperbarui 22 November 2026.
+- Bab 1.3: catatan PHP 8.3+ dan XAMPP hanya untuk MySQL/phpMyAdmin (temuan 2). Screenshot XAMPP Control Panel lama dihapus dan diganti langkah tertulis.
+- Bab 3: blok `.env` sebelum/sesudah dengan `DB_CONNECTION=mysql`, catatan error SQLite, `php artisan db:show` untuk mengecek koneksi, dan peringatan error tabel `sessions` sebelum migrate (temuan 1 dan 3).
+- Bab 4: diagram tabel baru (hanya `employees` dan `positions`), daftar tabel bawaan Laravel 13, dan peringatan urutan migration (temuan 4 dan 6).
+- Bab 5: `DatabaseSeeder` diganti seluruhnya, peringatan `db:seed` dua kali dan `migrate:fresh --seed`, penjelasan timestamp `NULL` (temuan 5 dan 9).
+- Bab 6–9: penjelasan alias `employee_id`, parameter binding `?`, tabel uji form termasuk email duplikat, catatan id tidak ditemukan, label `for="position"` (temuan 7 dan 10).
+- Bab 11 (Tugas): fitur Edit dijelaskan eksplisit dan disebut akan dipakai Modul 12; petunjuk padanan raw SQL ke query builder untuk tugas konversi (temuan 8).
+- Kode di modul diambil langsung dari folder `modul-11-database-dasar/` yang sudah diuji; screenshot diambil dari aplikasi yang berjalan.

@@ -62,13 +62,12 @@ Tidak diuji: pembuatan laporan dan upload ke GitHub.
 
 ## Status perbaikan modul
 
-Temuan di atas sudah diterapkan ke `modul-praktikum/Modul-12-Laravel-Database-Tahap-Lanjut.docx` (desain asli dipertahankan; tambahan ditulis sebagai kotak "Catatan"):
+`modul-praktikum/Modul-12-Laravel-Database-Tahap-Lanjut.docx` ditulis ulang dengan desain dan struktur Modul 09/10. Isi teknisnya tetap mengikuti modul asli, dan semua temuan di atas sudah diterapkan:
 
-- Sampul dan judul isi menjadi **MODUL 12**, tahun 2026; nomor halaman daftar isi diperbarui. Typo "dimiliki", "Tambahkan", "inheritance", "memanggil" diperbaiki (temuan 10).
-- Bab 1: teks "function employees()" dan catatan stub `make:model` Laravel 13 tanpa `HasFactory` (temuan 2 dan 3).
-- Bab 2: catatan N+1 query dan eager loading `with('position')` (temuan 7). Bab 3: catatan timestamp otomatis pada Eloquent.
-- Bab 4: catatan `findOrFail()`; label Position di Bab 4 dan 13 memakai `for="position"` (temuan 8).
-- Bab 5: "Buat file View .../edit.blade.php" beserta petunjuk kerangkanya, dan form edit memakai class `border` seperti form create (temuan 1 dan 6).
-- Bab 6: catatan import `DB` yang tidak terpakai (temuan 9). Bab 7: catatan `request()->routeIs('employees.*')` (temuan 4). Bab 15: catatan ikon Profile (temuan 5).
-
-Kode di folder modul ikut disesuaikan: `employee/show.blade.php` memakai `for="position"` dan `employee/edit.blade.php` memakai `border`.
+- Nomor modul menjadi **12**, Laravel 13, diperbarui 22 November 2026; typo diperbaiki (temuan 10).
+- Bab 3: diagram relasi, catatan stub `make:model` Laravel 13, nama method `employees()`, dan uji relasi lewat Tinker (temuan 2 dan 3).
+- Bab 4–6: catatan N+1 query dan eager loading, timestamp otomatis pada Eloquent, dan `findOrFail()` (temuan 7 dan 8), masing-masing dengan soal Pertanyaan.
+- Bab 7: `edit.blade.php` dibuat dari salinan `create.blade.php`, bukan "dibuka"; form edit memakai `border` (temuan 1 dan 6).
+- Bab 8: catatan import `DB` yang tidak terpakai (temuan 9).
+- Bab 9–10: diagram layout Blade, catatan `request()->routeIs('employees.*')`, ikon Profile, dan seluruh view final ditulis lengkap (tanpa "Dan seterusnya") (temuan 4 dan 5).
+- Kode di modul diambil langsung dari folder `modul-12-database-lanjut/` yang sudah diuji; screenshot diambil dari aplikasi yang berjalan.
